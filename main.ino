@@ -8,12 +8,14 @@ unsigned long totaltime;
 long initial_delay=180000;
 
 
-void led_off(int pin1, int pin2, int pin3, int pin4)
+void change_LED_state(uint8_t vg1, uint8_t vg2, uint8_t vy1, uint8_t vy2, uint8_t vr1, uint8_t vr2)
 {
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, LOW);
-  digitalWrite(pin3, LOW);
-  digitalWrite(pin4, LOW); 
+  digitalWrite(LEDg1, vg1);
+  digitalWrite(LEDg2, vg2);
+  digitalWrite(LEDy1, vy1);
+  digitalWrite(LEDy2, vy2);
+  digitalWrite(LEDr1, vr1);
+  digitalWrite(LEDr2, vr2); 
 }
 
 
@@ -58,44 +60,32 @@ void loop()
     }
     if(MQ135r<=400)
     {
-      digitalWrite(LEDg1, HIGH);
-      digitalWrite(LEDg2, HIGH);
-      led_off(LEDy1, LEDy2, LEDr1, LEDr2);
+      change_LED_state(HIGH,HIGH,LOW,LOW,LOW,LOW);
       lcd.print("VeryGood Quality");
     }
     else if(MQ135r>400 && MQ135r<=600)
     {
-      digitalWrite(LEDg1, HIGH);    
-      digitalWrite(LEDg2, LOW);
-      led_off(LEDy1, LEDy2, LEDr1, LEDr2);
+      change_LED_state(HIGH,LOW,LOW,LOW,LOW,LOW);
       lcd.print("Good Quality");
     }
     else if(MQ135r>600 && MQ135r<=700)
     {
-      digitalWrite(LEDy1, HIGH);
-      digitalWrite(LEDy2, LOW);
-      led_off(LEDg1, LEDg2, LEDr1, LEDr2);
+      change_LED_state(LOW,LOW,HIGH,LOW,LOW,LOW);
       lcd.print("Average Quality");
     }
     else if(MQ135r>700 && MQ135r<=800)
     {
-      digitalWrite(LEDy1, HIGH);
-      digitalWrite(LEDy2, HIGH);
-      led_off(LEDg1, LEDg2, LEDr1, LEDr2);
+      change_LED_state(LOW,LOW,HIGH,HIGH,LOW,LOW);
       lcd.print("Poor Quality");
     }
     else if(MQ135r>800 && MQ135r<=950)
     {
-      digitalWrite(LEDr1, HIGH);
-      digitalWrite(LEDr2, LOW);
-      led_off(LEDy1, LEDy2, LEDg1, LEDg2);
+      change_LED_state(LOW,LOW,LOW,LOW,HIGH,LOW);
       lcd.print("Bad Quality");
     }
     else
     {
-      digitalWrite(LEDr2, HIGH);
-      digitalWrite(LEDr1, HIGH);
-      led_off(LEDy1, LEDy2, LEDg1, LEDg2);
+      change_LED_state(LOW,LOW,LOW,LOW,HIGH,HIGH);
       lcd.print("EVACUATE!!!!!");    
       digitalWrite(Buzzer, HIGH);
     }  
